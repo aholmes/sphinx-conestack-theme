@@ -15,6 +15,7 @@
 ##############################################################################
 
 ## core.base
+OS?=
 
 # `deploy` target dependencies.
 # No default value.
@@ -644,3 +645,5 @@ runtime-clean:
 	@find . -name '*~' -exec rm -f {} +
 	@find . -name '__pycache__' -exec rm -fr {} +
 
+.PHONY: clean-all
+clean-all: purge runtime-clean
