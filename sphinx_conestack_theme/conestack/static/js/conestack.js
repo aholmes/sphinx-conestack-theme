@@ -24,7 +24,10 @@ class Conestack
 
     init_navigation() {
         let anchor = window.location.hash;
-        let sel = `${this.curr_nav_link_sel}[href='${anchor}']`;
+        let sel = `${this.curr_nav_link_sel}.current`;
+        if (anchor) {
+            sel = `${this.curr_nav_link_sel}[href='${anchor}']`;
+        }
         document.querySelector(sel)?.classList?.add('active');
         this.navigation?.classList.add('active');
     }
@@ -41,8 +44,11 @@ class Conestack
         let main_nav_links = this.navigation.querySelectorAll(this.main_nav_link_sel);
         main_nav_links.forEach(elem => {
             let new_span = document.createElement('span');
-            new_span.classList.add('toggle');            
+            new_span.classList.add('toggle');
             elem.parentNode.insertBefore(new_span, elem);
+            if (elem.parentNode.classList.contains('current')) {
+                new_span.nextElementSibling.classList.add('expanded');
+            }
         });
         let toggle_nav_links = this.navigation.querySelectorAll(this.main_nav_toggle_sel);
         toggle_nav_links.forEach(elem => {
@@ -59,7 +65,7 @@ class Conestack
                 } else {
                     next_elem.classList.remove('collapsed');
                     next_elem.classList.add('expanded');
-                    ul.style['display'] = 'initial';
+                    ul.style['display'] = 'block';
                 }
             });
         });
